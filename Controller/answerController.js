@@ -20,6 +20,7 @@ async function getAllQuestions(req, res) {
   }
 }
 
+// function to get the answer
 async function getAnswer(req, res) {
   const { questionid, answer } = req.body;
 
