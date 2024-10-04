@@ -15,18 +15,10 @@ async function getAnswer(req, res) {
       .status(StatusCodes.BAD_REQUEST)
       .json({ msg: "Please provide both question ID and answer." });
   }
-
-  // Optionally, validate questionid is a number
-  if (isNaN(questionid)) {
-    return res
-      .status(StatusCodes.BAD_REQUEST)
-      .json({ msg: "Question ID must be a number." });
-  }
-
   try {
     // First, check if the question exists
     const [questions] = await dbConnection.query(
-      "SELECT * FROM questions WHERE id = ?",
+      "SELECT questionid FROM questions WHERE questionid = ?",
       [questionid]
     );
     // If the question does not exist, return an error
@@ -35,11 +27,12 @@ async function getAnswer(req, res) {
         .status(StatusCodes.BAD_REQUEST)
         .json({ message: "No question found with this ID." });
     }
+    const userid = req.user.userid; // from auth middlewear
 
     // Insert the answer into the database
     await dbConnection.query(
-      "INSERT INTO answers (questionid, answer) VALUES (?, ?)",
-      [questionid, answer]
+      "INSERT INTO answers (questionid, answer, userid ) VALUES (?, ?, ?)",
+      [questionid, answer, userid]
     );
 
     return res.status(StatusCodes.CREATED).json({ answer: answer });
