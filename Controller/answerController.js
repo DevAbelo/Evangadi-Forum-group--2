@@ -1,4 +1,4 @@
-function postAnswer(req,res){
+function postAnswer(req, res) {
   //Assignee: Liyu
   res.send("post Answer to specific id question");
 }
