@@ -57,7 +57,7 @@ async function register(req, res) {
 }
 
 function checkuser(req, res) {
-  //Assignee: Habte and bekalu
+  //Assignee: Habte and bekalu 10/04/2024
   const username = req.user.username;
   const userid = req.user.userid;
   return res
@@ -65,7 +65,7 @@ function checkuser(req, res) {
     .json({ msg: "valid user", username, userid });
 }
 
-// end check user here 
+// end check user here
 
 function login(req, res) {
   //   Assignee: Abel
