@@ -3,5 +3,6 @@ const router=express.Router()
 
 const{ getAllQuestions,getAnswer}=require('../Controller/answerController')
 router.post("/answer", getAllQuestions);
-router.get("/answer/:question_id",getAnswer)
+router.get("/:questionid", authMiddleware, getAnswer);
+
   module.exports=router
