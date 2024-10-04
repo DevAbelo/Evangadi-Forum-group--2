@@ -2,7 +2,7 @@ function question(req, res) {
   // Assignee: Edom;
   // Assignee: Hanna;
 
-  res.send("question");
+  res.send("question hanna");
 }
 
 function Allquestion(req, res) {

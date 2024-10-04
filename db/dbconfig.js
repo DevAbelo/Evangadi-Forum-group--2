@@ -1,4 +1,6 @@
 const mysql2 = require("mysql2");
+const dotenv = require("dotenv");
+dotenv.config();
 
 const dbConnection = mysql2.createConnection({
     // socketPath: "/Applications/MAMP/tmp/mysql/mysql.sock", //path to mysql sock in MAMP
@@ -11,3 +13,4 @@ const dbConnection = mysql2.createConnection({
   });
   module.exports=dbConnection.promise()
   
+
