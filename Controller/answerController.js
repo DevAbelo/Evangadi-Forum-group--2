@@ -1,10 +1,24 @@
-function postAnswer(req, res) {
-  //Assignee: Liyu
-  res.send("post Answer to specific id question");
-}
-
-const dbConnection = require("../db/dbconfig");
 const { StatusCodes } = require("http-status-codes");
+const dbConnection = require("../db/dbconfig");
+
+// Function to handle GET request for fetching all questions
+async function getAllQuestions(req, res) {
+  try {
+    // Fetch all questions from the database
+    const [questions] = await dbConnection.query(
+      "select questions.id,questions.questionid,questions.userid,questions.title,questions.description,users.username from questions INNER JOIN users where questions.userid = users.userid"
+    );
+    return res
+      .status(StatusCodes.OK)
+      .json({ msg: "All question sent", questions });
+  } catch (error) {
+    console.error("Database query error:", error.message); // Log the error for debugging
+    return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
+      error: "Internal Server Error",
+      message: "An unexpected error occurred.",
+    });
+  }
+}
 
 async function getAnswer(req, res) {
   const { questionid, answer } = req.body;
@@ -15,6 +29,7 @@ async function getAnswer(req, res) {
       .status(StatusCodes.BAD_REQUEST)
       .json({ msg: "Please provide both question ID and answer." });
   }
+
   try {
     // First, check if the question exists
     const [questions] = await dbConnection.query(
@@ -28,10 +43,9 @@ async function getAnswer(req, res) {
         .json({ message: "No question found with this ID." });
     }
     const userid = req.user.userid; // from auth middlewear
-
     // Insert the answer into the database
     await dbConnection.query(
-      "INSERT INTO answers (questionid, answer, userid ) VALUES (?, ?, ?)",
+      "INSERT INTO answers (questionid, answer, userid) VALUES (?, ?, ?)",
       [questionid, answer, userid]
     );
 
@@ -44,4 +58,4 @@ async function getAnswer(req, res) {
   }
 }
 
-module.exports = getAnswer;
+module.exports = { getAllQuestions, getAnswer };
