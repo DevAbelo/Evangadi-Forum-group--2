@@ -21,9 +21,13 @@ app.get("/", (req, res) => {
   res.send("welcome");
 });
 
+
+
+  
 // creating tables middlewear install
 const installRoutes = require("./routes/installRoute");
 app.use("/", installRoutes);
+
 //user route middlewear
 const userRoutes = require("./routes/userRoute");
 app.use("/api/users", userRoutes);
