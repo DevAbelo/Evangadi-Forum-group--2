@@ -1,7 +1,7 @@
 const express = require("express");
 const router=express.Router()
 
-const{postAnswer,getAnswer}=require('../Controller/answerController')
-router.post("/answer",postAnswer)
+const{ getAllQuestions,getAnswer}=require('../Controller/answerController')
+router.post("/answer", getAllQuestions);
 router.get("/answer/:question_id",getAnswer)
   module.exports=router
