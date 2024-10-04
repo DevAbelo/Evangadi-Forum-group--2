@@ -3,56 +3,50 @@ const express = require("express");
 const cors = require("cors");
 const bodyparser = require("body-parser");
 
-
 const app = express();
-const port=5500
+const port = 3306;
 
-
-app.use(bodyparser.json());   //body json format
-app.use(bodyparser.urlencoded({ extended: true }))
+app.use(bodyparser.json()); //body json format
+app.use(bodyparser.urlencoded({ extended: true }));
 app.use(cors());
 app.use(express.json());
 
 //db connection credentials
-const dbConnection=require('./db/dbconfig')
-
-
+const dbConnection = require("./db/dbconfig");
 
 //   //testing the backend
-  app.get("/",(req,res)=>{
-    res.send("welcome")
-  })
+app.get("/", (req, res) => {
+  res.send("welcome");
+});
 
-  // creating tables middlewear install
-  const installRoutes=require('./routes/installRoute')
-  app.use('/',installRoutes)
+// creating tables middlewear install
+const installRoutes = require("./routes/installRoute");
+app.use("/", installRoutes);
 //user route middlewear
-const userRoutes=require('./routes/userRoute')
-app.use('/api/users',userRoutes)
+const userRoutes = require("./routes/userRoute");
+app.use("/api/users", userRoutes);
 
 //question route middlewear
-const questionRoutes=require('./routes/questionRoute')
-app.use('/api',questionRoutes)
+const questionRoutes = require("./routes/questionRoute");
+app.use("/api", questionRoutes);
 
 //Answer route middlewear
-const answerRoutes=require('./routes/answerRoute')
-app.use('/api',answerRoutes)
+const answerRoutes = require("./routes/answerRoute");
+app.use("/api", answerRoutes);
 
-  // app.listen(port, () => console.log(`Listening to :${port}`));
+// app.listen(port, () => console.log(`Listening to :${port}`));
 
-  // try conncet to database and if so app listen
-  async function start(){
-    try {
-      const result=await dbConnection.connect();
-      console.log("database connection established");
-     
-    } catch (error) {
-      console.log(error.message)
-    }
+// try conncet to database and if so app listen
+async function start() {
+  try {
+    const result = await dbConnection.connect();
+    console.log("database connection established");
+  } catch (error) {
+    console.log(error.message);
   }
-  start();
-  app.listen(port, (error) => {
-    if(error)
-      console.log(error.message)
-    console.log(`Listening to :${port}`)
-  });
+}
+start();
+app.listen(port, (error) => {
+  if (error) console.log(error.message);
+  console.log(`Listening to :${port}`);
+});

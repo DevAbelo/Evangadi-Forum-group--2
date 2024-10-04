@@ -1,3 +1,5 @@
+// import dbConnection from "./installController"
+
 function register(req, res) {
   //check all required information
   //sql statement
@@ -6,10 +8,25 @@ function register(req, res) {
 // Assignee: Bereket; 
   res.send("register");
 }
+
+// start cheuser here 
+// function checkuser(req, res) {
+//   //Assignee: Habte & Bekalu
+//   res.send("check user");
+  
+// }
+
 function checkuser(req, res) {
-  //Assignee: Habte
-  res.send("check user");
+  //Assignee: Habte and bekalu
+  const username = req.user.username;
+  const userid = req.user.userid;
+  return res
+    .status(StatusCodes.OK)
+    .json({ msg: "valid user", username, userid });
 }
+
+// end check user here 
+
 function login(req, res) {
   //   Assignee: Abel
 
