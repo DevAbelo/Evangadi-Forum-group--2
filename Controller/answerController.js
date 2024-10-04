@@ -1,10 +1,25 @@
-function postAnswer(req,res){
-  //Assignee: Liyu
-  res.send("post Answer to specific id question");
+const { StatusCodes } = require("http-status-codes");
+const dbConnection = require("../db/dbconfig"); 
+
+// Function to handle GET request for fetching all questions
+async function getAllQuestions(req, res) {
+  try {
+    // Fetch all questions from the database
+const [questions]= await dbConnection.query("select questions.id,questions.questionid,questions.userid,questions.title,questions.description,users.username from questions INNER JOIN users where questions.userid = users.userid")
+    return res.status(StatusCodes.OK).json({msg:"All question sent",questions})
+
+  } catch (error) {
+    console.error("Database query error:", error.message); // Log the error for debugging
+    return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
+      error: "Internal Server Error",
+      message: "An unexpected error occurred.",
+    });
+  }
 }
 
-const dbConnection = require("../db/dbconfig");
-const { StatusCodes } = require("http-status-codes");
+
+// const dbConnection = require("../db/dbconfig");
+// const { StatusCodes } = require("http-status-codes");
 
 async function getAnswer(req, res) {
   const { questionid, answer } = req.body;
@@ -22,6 +37,7 @@ async function getAnswer(req, res) {
       .status(StatusCodes.BAD_REQUEST)
       .json({ msg: "Question ID must be a number." });
   }
+
 
   try {
     // First, check if the question exists
@@ -51,4 +67,7 @@ async function getAnswer(req, res) {
   }
 }
 
-module.exports = getAnswer;
+// module.exports = getAnswer;
+
+module.exports = { getAllQuestions, getAnswer };
+
