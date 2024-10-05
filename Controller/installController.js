@@ -30,10 +30,14 @@ async function install(req, res) {
     FOREIGN KEY (userid) REFERENCES users(userid)
     
 )`;
+  let alterquestion = `ALTER TABLE questions ADD COLUMN created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP`;
+   let alteranswer= `ALTER TABLE answers ADD COLUMN created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP`;
   try {
     await dbConnection.query(createuser);
     await dbConnection.query(createquestions);
     await dbConnection.query(createanswers);
+    await dbConnection.query(alterquestion);
+    await dbConnection.query(alteranswer);
     return res.status(201).json({ msg: "table created" });
   } catch (error) {
     console.log(error.message);
