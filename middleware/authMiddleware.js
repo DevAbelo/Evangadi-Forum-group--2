@@ -10,7 +10,6 @@ if(!authHeader || !authHeader.startsWith('Bearer')){
 const token=authHeader.split(' ')[1]
    try {
     const {username,userid}=jwt.verify(token,process.env.JWTSECRET)
- 
     // return res.status(StatusCodes.OK).json(data)
     req.user={username,userid}
     next();
