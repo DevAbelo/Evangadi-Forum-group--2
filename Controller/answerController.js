@@ -1,26 +1,27 @@
 const { StatusCodes } = require("http-status-codes");
 const dbConnection = require("../db/dbconfig");
 
-// Function to handle GET request for fetching all questions
-async function getAllQuestions(req, res) {
-  try {
-    // Fetch all questions from the database
-    const [questions] = await dbConnection.query(
-      "select questions.id,questions.questionid,questions.userid,questions.title,questions.description,users.username, questions.created_at from questions INNER JOIN users where questions.userid = users.userid"
-    );
-    return res
-      .status(StatusCodes.OK)
-      .json({ msg: "All question sent", questions });
-  } catch (error) {
-    console.error("Database query error:", error.message); // Log the error for debugging
-    return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
-      error: "Internal Server Error",
-      message: "An unexpected error occurred.",
-    });
-  }
+
+async function postAnswer(req,res){
+  //Assignee: Liyu
+  const {questionid, answer}=req.body
+if(!questionid || !answer){
+  return res.status(StatusCodes.BAD_REQUEST).json({msg:"please provide all requird information"})
+}
+try {
+  const username=req.user.username;  // from auth middlewear
+  const userid=req.user.userid       // from auth middlewear
+  await dbConnection.query("insert into answers (questionid,userid,answer) values(?,?,?)",[questionid,userid,answer])
+  return res.status(StatusCodes.CREATED).json({msg:"answer added"})
+} catch (error) {
+  console.log(error.message)
+  return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({msg:"someting went wrong,try again later"})
+}
+ 
 }
 
 // function to get the answer
+// Assign to Selam
 async function getAnswer(req, res) {
   // const { questionid, answer } = req.body;
   // req.params: Used to get data from the URL path of the request, typically in GET requests.
@@ -60,4 +61,4 @@ async function getAnswer(req, res) {
   }
 }
 
-module.exports = { getAllQuestions, getAnswer };
+module.exports = { postAnswer, getAnswer };
