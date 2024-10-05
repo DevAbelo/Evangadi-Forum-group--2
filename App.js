@@ -38,7 +38,7 @@ app.use("/api", questionRoutes);
 
 //Answer route middlewear
 const answerRoutes = require("./routes/answerRoute");
-app.use("/api", answerRoutes);
+app.use("/api/answer", answerRoutes);
 
 // app.listen(port, () => console.log(`Listening to :${port}`));
 
