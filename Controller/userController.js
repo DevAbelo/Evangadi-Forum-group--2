@@ -74,6 +74,7 @@ function checkuser(req, res) {
   return res.status(StatusCodes.OK).json({msg:"valid user",username,userid})
 
 }
+// Assigne to Abel
 async function login(req, res) {
   const {email,password}=req.body
   if(!email || !password){
