@@ -1,11 +1,16 @@
-function question(req, res) {
+const dbConnection = require('../db/dbconfig')
+
+async function question(req, res) {
   // Assignee: Edom;
+
   // Assignee: Hanna;
+  const { title, description, tag } = req.body;
 
-  const { title, description } = req.body;
+  // console.log("title:", title);
+  // console.log("description:", description);
+  // console.log("tag:", tag);
+  // console.log("user:", req.user);
 
-  console.log("title:", title);
-  console.log("description:", description);
 
   // validate req body
   if (!title || !description) {
@@ -16,24 +21,20 @@ function question(req, res) {
   }
 
   try {
-    // const createdBy = req.user ? req.user.userid : null;
+  
+    const {userid} = req.user
 
-    // if(!createdBy) {
-    //   return res.status(400).json({
-    //     error: 'user id is request!'
-    //   })
-    // }
-
-    //inser the question
-
-    // await dbConnection.execute(
-    //   "INSERT INTO questions (questionid, userid, title,description) VALUES (1,2,?,?)",
-    //   [title, description || null]
-    // );
+    //insert the question
+    await dbConnection.execute(
+      "INSERT INTO questions(questionid, userid, title, description, tag) VALUES (UUID(), ?,?,?,?)"[
+        userid, title, description, tag || null
+      ]
+    );
 
     return res.status(201).json({
       msg: "Question created successfully",
     });
+
   } catch (error) {
     console.error(error);
     return res.status(500).json({
