@@ -1,36 +1,14 @@
-const dataBaseConnection = require("../db/dbconfig");
-const { StatusCodes } = require("http-status-codes");
-
- // Assignee: Edom;
-  // Assignee: Hanna;
-async function Allquestion(req, res) {
-  try {
-    const [results] = await dataBaseConnection.query(
-      `SELECT 
-          questions.questionid AS question_id, 
-          questions.title, 
-          questions.description AS content, 
-          users.username AS user_name 
-      FROM questions 
-      JOIN users ON questions.userid = users.userid 
-      ORDER BY questions.id DESC`
-    );
-    return res.status(StatusCodes.OK).json({ questions: results });
-  } catch (error) {
-    // console.log(error.message);
-    return res
-      .status(StatusCodes.NOT_FOUND)
-      .json({ msg: "No questions found" });
-  }
-}
-
-
-
+const { json, query } = require("express");
+const dbConnection = require("../db/dbconfig");
+const {
+  StatusCodes
+} = require("http-status-codes");
+const { v4: uuidv4 } = require("uuid");
 async function question(req, res) {
-  const { questionid, title, description } = req.body;
-
+  const { title, description } = req.body;
   // Validate input
-  if (!questionid || !title || !description) {
+  const questionid = uuidv4();
+  if (!title || !description) {
     return res
       .status(StatusCodes.BAD_REQUEST)
       .json({ msg: "Please provide all required information" });
@@ -72,5 +50,56 @@ async function question(req, res) {
       .json({ msg: "Something went wrong, try again later" });
   }
 }
+async function Allquestion(req, res) {
+  try {
+    const [results] = await dbConnection.query(
+      `SELECT 
+          questions.questionid AS question_id, 
+          questions.title, 
+          questions.description AS content, 
+          users.username AS user_name 
+      FROM questions 
+      JOIN users ON questions.userid = users.userid 
+      ORDER BY questions.id DESC`
+    );
+    return res.status(StatusCodes.OK).json({ questions: results });
+  } catch (error) {
+    // console.log(error.message);
+    return res
+      .status(StatusCodes.NOT_FOUND)
+      .json({ msg: "No questions found" });
+  }
+}
+async function getSingleQuestion(req, res) {
+  const { question_id } = req.params;
 
-module.exports = { question, Allquestion };
+  if (!question_id) {
+    return res
+      .status(StatusCodes.BAD_REQUEST)
+      .json({ msg: "Please provide a question ID." });
+  }
+
+  try {
+    // Retrieve the question details
+    const [question] = await dbConnection.query(
+      "SELECT questionid, title, description, created_at, userid FROM questions WHERE questionid = ?",
+      [question_id]
+    );
+
+    // If the question does not exist, return an error
+    if (question.length === 0) {
+      return res
+        .status(StatusCodes.NOT_FOUND)
+        .json({ message: "No question found with this ID." });
+    }
+
+    return res.status(StatusCodes.OK).json({ question: question[0] });
+  } catch (error) {
+    console.error("Error while retrieving question:", error.message);
+    return res
+      .status(StatusCodes.INTERNAL_SERVER_ERROR)
+      .json({ msg: "Something went wrong, please try again!" });
+  }
+}
+
+module.exports = { question, Allquestion, getSingleQuestion };
