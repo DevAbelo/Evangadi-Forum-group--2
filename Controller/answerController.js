@@ -35,7 +35,6 @@ async function getAnswer(req, res) {
     // First, check if the question exists
     const [questions] = await dbConnection.query(
       "SELECT questionid FROM questions WHERE questionid = ?",
-      "SELECT questionid FROM questions WHERE questionid = ?",
       [questionid]
     );
     // If the question does not exist, return an error
