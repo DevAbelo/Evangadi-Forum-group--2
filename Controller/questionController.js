@@ -1,12 +1,8 @@
 const dataBaseConnection = require("../db/dbconfig");
 const { StatusCodes } = require("http-status-codes");
-function question(req, res) {
-  // Assignee: Edom;
+
+ // Assignee: Edom;
   // Assignee: Hanna;
-
-  res.send("question hanna");
-}
-
 async function Allquestion(req, res) {
   try {
     const [results] = await dataBaseConnection.query(
@@ -28,7 +24,7 @@ async function Allquestion(req, res) {
   }
 }
 
-module.exports = { question, Allquestion };
+
 
 async function question(req, res) {
   const { questionid, title, description } = req.body;
@@ -76,3 +72,5 @@ async function question(req, res) {
       .json({ msg: "Something went wrong, try again later" });
   }
 }
+
+module.exports = { question, Allquestion };
