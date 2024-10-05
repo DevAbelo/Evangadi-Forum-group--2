@@ -6,7 +6,7 @@ async function getAllQuestions(req, res) {
   try {
     // Fetch all questions from the database
     const [questions] = await dbConnection.query(
-      "select questions.id,questions.questionid,questions.userid,questions.title,questions.description,users.username from questions INNER JOIN users where questions.userid = users.userid"
+      "select questions.id,questions.questionid,questions.userid,questions.title,questions.description,users.username, questions.created_at from questions INNER JOIN users where questions.userid = users.userid"
     );
     return res
       .status(StatusCodes.OK)
@@ -40,18 +40,22 @@ async function getAnswer(req, res) {
     // If the question does not exist, return an error
     if (questions.length === 0) {
       return res
-        .status(StatusCodes.BAD_REQUEST)
+        .status(StatusCodes.NOT_FOUND)
         .json({ message: "No question found with this ID." });
     }
     const userid = req.user.userid; // from auth middlewear
     // Insert the answer into the database
     await dbConnection.query(
-      "INSERT INTO answers (questionid, answer, userid) VALUES (?, ?, ?)",
+      "INSERT INTO answers (questionid, answer, userid, Created_at) VALUES (?, ?, ?, NOW())",
       [questionid, answer, userid]
     );
-
+//  return res.status(StatusCodes.CREATED).json({
+//    msg: "Answer submitted successfully",
+//    answer,
+// //  });
     return res.status(StatusCodes.CREATED).json({ answer: answer });
   } catch (error) {
+    // console.error("Error while submitting answer:", error.message);
     console.log(error.message);
     return res
       .status(StatusCodes.INTERNAL_SERVER_ERROR)
