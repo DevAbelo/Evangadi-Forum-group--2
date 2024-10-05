@@ -50,13 +50,8 @@ async function getAnswer(req, res) {
       "INSERT INTO answers (questionid, answer, userid, Created_at) VALUES (?, ?, ?, NOW())",
       [questionid, answer, userid]
     );
-//  return res.status(StatusCodes.CREATED).json({
-//    msg: "Answer submitted successfully",
-//    answer,
-// //  });
     return res.status(StatusCodes.CREATED).json({ answer: answer });
   } catch (error) {
-    // console.error("Error while submitting answer:", error.message);
     console.log(error.message);
     return res
       .status(StatusCodes.INTERNAL_SERVER_ERROR)
