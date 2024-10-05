@@ -10,5 +10,4 @@ const dbConnection = mysql2.createConnection({
   password: process.env.DB_PASS,
   connectionLimit: 10,
 });
-
 module.exports = dbConnection.promise();
