@@ -67,10 +67,40 @@ function checkuser(req, res) {
 
 // end check user here
 
-function login(req, res) {
-  //   Assignee: Abel
+function checkuser(req, res) {
+  //Assignee: Habte and bekalu
+  const username=req.user.username;
+  const userid=req.user.userid
+  return res.status(StatusCodes.OK).json({msg:"valid user",username,userid})
 
-  res.send("login");
+}
+async function login(req, res) {
+  const {email,password}=req.body
+  if(!email || !password){
+    return res.status(StatusCodes.BAD_REQUEST).json({msg:"please provide all requird information"})
+  }
+  try {
+    const [user]= await dbConnection.query("select username,userid,password from users where email=? ",[email])
+    if(user.length === 0){
+      return res.status(StatusCodes.BAD_REQUEST).json({msg:"invaild credential"})
+    }
+    const isMatch=await bcrypt.compare(password,user[0].password)
+   
+   if (!isMatch)
+   {
+    return res.status(StatusCodes.BAD_REQUEST).json({msg:"invaild credential"})
+   }
+
+   //if usename and password correct send token
+   const username=user[0].username
+   const userid=user[0].userid
+   const token = jwt.sign({username,userid},process.env.JWTSECRET,{expiresIn :"1d"})
+   return res.status(StatusCodes.OK).json({msg:"user login sucessful",token})
+  } catch (error) {
+    console.log(error.message)
+  return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({msg:"someting went wrong,try again later"})
+  }
+
 }
 
 module.exports = { register, checkuser, login };
