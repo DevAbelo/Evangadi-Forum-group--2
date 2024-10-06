@@ -6,7 +6,7 @@ const {
   postAnswer,
   getAnswer,
 } = require("../Controller/answerController");
-router.post("/answer", postAnswer);
+router.post("/answer/:questionid", postAnswer);
 router.get("/:questionid", getAnswer);
 
 module.exports=router
