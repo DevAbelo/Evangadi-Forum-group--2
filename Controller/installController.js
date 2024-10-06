@@ -12,7 +12,7 @@ async function install(req, res) {
 )`;
   let createquestions = `CREATE TABLE if not exists questions(
     id int(20) not null auto_increment,
-    questionid varchar(100) not null unique,
+    questionid varchar(100) not null UNIQUE,
     userid int(20) not null,
     title varchar(200) not null,
     description varchar(300) not null,
@@ -24,7 +24,7 @@ async function install(req, res) {
   let createanswers = `CREATE TABLE if not exists answers(
     answerid int(20) not null auto_increment,
     userid int(20) not null,
-    questionid varchar(100) not null unique,
+    questionid varchar(100) not null,
     answer varchar(500) not null,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     PRIMARY KEY (answerid),

@@ -39,7 +39,7 @@ app.use("/api",authMiddleware ,questionRoutes);
 
 //Answer route middlewear
 
-app.use("/api", answerRoutes);
+app.use("/api",authMiddleware,answerRoutes);
 
 // app.listen(port, () => console.log(`Listening to :${port}`));
 
