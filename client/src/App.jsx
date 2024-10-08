@@ -1,15 +1,11 @@
-import { useState } from 'react'
-
-import './App.css'
-
+// import { useState } from "react";
+import Routing from "./Routing";
 function App() {
-  
-
   return (
     <>
-      <h1>Evangadi Fourm Project Group 2</h1>
+      <Routing />
     </>
-  )
+  );
 }
 
-export default App
+export default App;
