@@ -3,10 +3,10 @@ const router=express.Router()
 // const authMiddleware = require("../middlewear/authMiddleware")
 
 const {
-  getAllQuestions,
+  postAnswer,
   getAnswer,
 } = require("../Controller/answerController");
-router.post("/answer", getAllQuestions);
+router.post("/answer", postAnswer);
 
 // Route to get answers for a specific question (GET method)
 router.get("/:questionid", getAnswer);

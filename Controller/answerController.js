@@ -19,18 +19,17 @@ async function getAllQuestions(req, res) {
     });
   }
 }
-
 // function to get the answer
 async function getAnswer(req, res) {
-  // const { questionid, answer } = req.body;
-  // req.params: Used to get data from the URL path of the request, typically in GET requests.
-  const { questionid } = req.params;
+  const { questionid, answer } = req.body;
 
-  if (!questionid) {
+  // Check if questionid and answer are provided
+  if (!questionid || !answer) {
     return res
       .status(StatusCodes.BAD_REQUEST)
-      .json({ msg: "Please provide a question ID." });
+      .json({ msg: "Please provide both question ID and answer." });
   }
+
   try {
     // First, check if the question exists
     const [questions] = await dbConnection.query(
@@ -43,16 +42,14 @@ async function getAnswer(req, res) {
         .status(StatusCodes.NOT_FOUND)
         .json({ message: "No question found with this ID." });
     }
-    // const userid = req.user.userid; // from auth middlewear
-    
-    // retrieve/get answers for a specific question
-    const [answer] = await dbConnection.query(
-      "SELECT answerid, answer, created_at FROM answers WHERE questionid = ?",
-      [questionid]
+    const userid = req.user.userid; // from auth middlewear
+    // Insert the answer into the database
+    await dbConnection.query(
+      "INSERT INTO answers (questionid, answer, userid, Created_at) VALUES (?, ?, ?, NOW())",
+      [questionid, answer, userid]
     );
-    return res.status(StatusCodes.OK).json({ questionid, answer: answer });
+    return res.status(StatusCodes.CREATED).json({ answer: answer });
   } catch (error) {
-    // console.error("Error while submitting answer:", error.message);
     console.log(error.message);
     return res
       .status(StatusCodes.INTERNAL_SERVER_ERROR)
