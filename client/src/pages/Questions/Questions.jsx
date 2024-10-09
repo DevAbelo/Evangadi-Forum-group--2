@@ -1,17 +1,16 @@
 import React, { useRef, useState } from "react";
+import classes from "./questions.module.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircleDown } from "@fortawesome/free-solid-svg-icons";
-import classes from "./questions.module.css";
-import axios from "../../Api/axios";
+import axios from "../../API/axios";
 
-function Questions() {
+const Question = () => {
   const [alertMessage, setAlertMessage] = useState(""); // Alert message state
   const [alertType, setAlertType] = useState(""); // To track success or error
 
   const token = localStorage.getItem("token");
   const titleDom = useRef(null);
   const detailDom = useRef(null);
-
   async function handleSubmit(e) {
     e.preventDefault();
     const title = titleDom.current.value;
@@ -41,7 +40,8 @@ function Questions() {
     }
     setTimeout(() => {
       setAlertMessage("");
-    }, 5000);
+      window.location.reload();
+    }, 4000);
   }
 
   return (
@@ -89,7 +89,6 @@ function Questions() {
         <div>
           <h3 className={classes.post_title_2}>Post Your Question</h3>
         </div>
-
         {alertMessage && (
           <div
             className={classes.question_alert_message}
@@ -100,7 +99,6 @@ function Questions() {
             {alertMessage}
           </div>
         )}
-
         <form onSubmit={handleSubmit}>
           <input
             ref={titleDom}
@@ -124,6 +122,6 @@ function Questions() {
       </div>
     </section>
   );
-}
+};
 
-export default Questions;
+export default Question;

@@ -1,0 +1,32 @@
+.outer_about_wrapper {
+  height: 630px;
+  padding: 40px 0;
+  /* background-color: #F5F5F5; */
+}
+
+.about_container {
+  width: 584px;
+  margin: 100px 10px 60px 15px;
+}
+.about p {
+  color: #fe8302;
+}
+.about_container h1 {
+  margin-bottom: -10px;
+}
+.about_container p,
+.about_container h1 {
+  color: #374373;
+  padding: 10px;
+}
+
+.about_btn {
+  margin-left: 10px;
+  margin-top: 30px;
+  width: 175px;
+  height: 35px;
+  color: #fff;
+  background-color: #fe8302;
+  border: none;
+  border-radius: 3px;
+}

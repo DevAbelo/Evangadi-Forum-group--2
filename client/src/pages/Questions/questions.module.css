@@ -47,8 +47,8 @@
   padding: 5px 15px;
   margin: 0 0 10px auto;
   text-align: center;
-  border: 3px solid  #0D6EFD;
+  /* border: 3px solid  #0D6EFD; */
   border-radius: 8px;
-  width: 280px;
+  /* width: 280px; */
   background-color: #fafafa;
 }
