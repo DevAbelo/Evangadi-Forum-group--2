@@ -2,14 +2,15 @@ import { useState } from 'react'
 
 import './App.css'
 
+import Footer from './Components/Footer/Footer';
+
 function App() {
   
-
   return (
     <>
-      <h1>Evangadi Fourm Project Group 2</h1>
+      <Footer/>
     </>
-  )
+  );
 }
 
 export default App
