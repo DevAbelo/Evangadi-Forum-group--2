@@ -7,16 +7,16 @@ import Questions from "./pages/Questions/Questions"
 import Answer from "./pages/Answer/Answer"
 function Routing() {
   return (
-    <BrowserRouter>
+   
       <Routes>
         <Route path="/" element={<Layout />}>
           <Route path="/" element={<Landing />} />
           <Route path="/home" element={<Home />} />
           <Route path="/question" element={<Questions/>}/>
-          <Route path="/home/:questionId" element={<Answer/>}/>
+          <Route path="/home/answers/:questionId" element={<Answer/>}/>
         </Route>
       </Routes>
-    </BrowserRouter>
+  
   );
 }
 
