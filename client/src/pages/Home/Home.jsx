@@ -5,6 +5,9 @@ import { IoIosArrowForward } from "react-icons/io";
 import { AppState } from '../../Context/DataContext';
 import { IoIosContact } from "react-icons/io";
 import axios from '../../Api/axios';
+import Loader from '../../Components/Loader/Loader';
+// Assigne to Abel and Bekalu.
+
 function Home() {
   const {user}=useContext(AppState);
   const token = localStorage.getItem('token');
@@ -32,6 +35,8 @@ localStorage.setItem("token","eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZ
     Loadquestions();
 },[])
   return (
+    <>
+    <Loader/>
     <section className={classes.home__container}>
       <div className={classes.home__topcontainer}>
         <div ><Link to="/question">Ask Question</Link></div>
@@ -69,6 +74,7 @@ localStorage.setItem("token","eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZ
       
       </div>
     </section>
+    </>
   )
 }
 

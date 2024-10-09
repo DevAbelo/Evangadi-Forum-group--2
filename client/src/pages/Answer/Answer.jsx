@@ -3,6 +3,7 @@ import classes from "../Answer/answer.module.css";
 import { IoIosContact } from "react-icons/io";
 import instance from "../../Api/axios";
 import { useParams } from "react-router-dom";
+import Loader from "../../Components/Loader/Loader";
 
 function Answer() {
   const { questionid } = useParams();
@@ -91,6 +92,7 @@ function Answer() {
 
   return (
     <>
+    <Loader/>
       <main>
         <section className={classes.question_section}>
           <h2>Question</h2>

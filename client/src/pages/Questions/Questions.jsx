@@ -4,6 +4,7 @@ import { faCircleDown } from "@fortawesome/free-solid-svg-icons";
 import classes from "./questions.module.css";
 import axios from "../../Api/axios";
 import { useNavigate } from "react-router-dom";
+import Loader from "../../Components/Loader/Loader";
 
 function Questions() {
   
@@ -40,6 +41,8 @@ function Questions() {
   }
 
   return (
+    <>
+    <Loader/>
     <section className={classes.post_question_container}>
       <div className={classes.inner_post_question_wrapper}>
         <div>
@@ -106,6 +109,7 @@ function Questions() {
         </form>
       </div>
     </section>
+    </>
   );
 }
 
