@@ -1,15 +1,16 @@
 // Assigned to EDOimport { useRef, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import axios from "../../Api/axios";
 import classes from "./login.module.css"; // Import your CSS file
 import { useContext, useRef, useState } from "react";
 import { AppState } from "../../Context/DataContext";
-function SignIn() {
+function SignIn({ visible }) {
+  const { setShow } = visible;
   const emailRef = useRef();
   const passwordRef = useRef();
   const [errorMessage, setErrorMessage] = useState("");
   const navigate = useNavigate();
-  const {user,setUser} = useContext(AppState);
+  const { user, setUser } = useContext(AppState);
   async function handleSubmit(e) {
     e.preventDefault();
     const emailValue = emailRef.current.value.trim();
@@ -27,8 +28,8 @@ function SignIn() {
         password: passwordValue,
       });
       if (response.status === 200) {
-          localStorage.setItem("token", response.data.token);
-          setUser(response.data.username);
+        localStorage.setItem("token", response.data.token);
+        setUser(response.data.username);
         navigate("/");
       }
     } catch (error) {
@@ -45,9 +46,13 @@ function SignIn() {
       <h1>Login to your account</h1>
       <p>
         Don't have an account?
-        <a class="lnk-toggler" data-panel="panel-signup" href="#">
+        <Link
+          class="lnk-toggler"
+          data-panel="panel-signup"
+          onClick={() => setShow(true)}
+        >
           Create a new account?
-        </a>
+        </Link>
       </p>
       {errorMessage && <p className={classes.error_message}>{errorMessage}</p>}
       <form onSubmit={handleSubmit} className={classes.signIn_form}>

@@ -2,7 +2,12 @@ import React, { useRef, useState } from "react";
 import classes from "./questions.module.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircleDown } from "@fortawesome/free-solid-svg-icons";
-import axios from "../../API/axios";
+
+import classes from "./questions.module.css";
+import axios from "../../Api/axios";
+import { useNavigate } from "react-router-dom";
+import Loader from "../../Components/Loader/Loader";
+
 
 const Question = () => {
   const [alertMessage, setAlertMessage] = useState(""); // Alert message state
@@ -45,6 +50,8 @@ const Question = () => {
   }
 
   return (
+    <>
+    <Loader/>
     <section className={classes.post_question_container}>
       <div className={classes.inner_post_question_wrapper}>
         <div>
@@ -121,6 +128,7 @@ const Question = () => {
         </form>
       </div>
     </section>
+    </>
   );
 };
 
