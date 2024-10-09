@@ -1,9 +1,7 @@
 // import { useState } from "react";
 import { useContext, useEffect, useState } from "react";
 import Routing from "./Routing";
-import { useNavigate } from "react-router-dom";
-import axios from './Api/axios';
-import { AppState } from "./Context/DataContext";
+import SignUp from "./Components/SignUp/SignUp"
 function App() {
  const {user,setUser}=useContext(AppState)
   // const [logedin,setlogedin]=useState("SIGNIN") //on context
@@ -33,6 +31,7 @@ useEffect(()=>{
   return (
     <>
       <Routing />
+      {/* <SignUp/> */}
     </>
   );
 }
