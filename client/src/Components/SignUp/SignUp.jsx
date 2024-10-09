@@ -2,9 +2,10 @@ import React, { useState } from "react";
 import Classes from "./signUp.module.css";
 import { BiHide, BiShow } from "react-icons/bi";
 import axios from "../../Api/axios";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
-const SignUp = () => {
+const SignUp = ({ visible }) => {
+  const { setShow } = visible;
   const navigate = useNavigate();
   const [userName, setUserName] = useState("");
   const [firstName, setFirstName] = useState("");
@@ -13,7 +14,6 @@ const SignUp = () => {
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState("");
-  
 
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
@@ -21,7 +21,6 @@ const SignUp = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
 
     // Validate required fields
     if (!userName || !firstName || !lastName || !email || !password) {
@@ -37,17 +36,15 @@ const SignUp = () => {
         email: email,
         password: password,
       });
-      if(response.status === 200){
-        navigate("/login")
+      if (response.status === 200) {
+        navigate("/login");
       }
-     
     } catch (error) {
       if (error.response) {
         setError(error.response.data.message); // Show server error message
       } else {
         setError("An unexpected error occurred.");
       }
-
     }
   };
 
@@ -55,7 +52,8 @@ const SignUp = () => {
     <div className={Classes.signup_container}>
       <h2>Join the network</h2>
       <div className={Classes.login_link}>
-        Already have an account? <a href="/login">Sign in</a>
+        Already have an account?{" "}
+        <Link onClick={() => setShow(false)}>Sign in</Link>
       </div>
 
       <form onSubmit={handleSubmit}>

@@ -7,7 +7,6 @@ import { useContext, useEffect, useState } from "react";
 import Routing from "./Routing";
 import { useNavigate } from "react-router-dom";
 import { AppState } from "./Context/DataContext";
-
 function App() {
  const {user,setUser}=useContext(AppState)
   const token=localStorage.getItem('token')
