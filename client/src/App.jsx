@@ -1,16 +1,13 @@
-import { useState } from 'react'
-
-import './App.css'
-
-import Footer from './Components/Footer/Footer';
-
+// import { useState } from "react";
+import Routing from "./Routing";
+import SignUp from "./Components/SignUp/SignUp"
 function App() {
-  
   return (
     <>
-      <Footer/>
+      <Routing />
+      {/* <SignUp/> */}
     </>
   );
 }
 
-export default App
+export default App;
