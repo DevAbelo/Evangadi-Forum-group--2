@@ -2,8 +2,7 @@ const mysql2 = require("mysql2");
 const express = require("express");
 const cors = require("cors");
 const bodyparser = require("body-parser");
-const answerRoutes = require("./routes/answerRoute");
-const authMiddleware = require("./middleware/authMiddleware");
+
 const app = express();
 
 const port = 5500;
@@ -35,11 +34,11 @@ app.use("/api/users", userRoutes);
 
 //question route middlewear
 const questionRoutes = require("./routes/questionRoute");
-app.use("/api",authMiddleware ,questionRoutes);
+app.use("/api", questionRoutes);
 
 //Answer route middlewear
-
-app.use("/api",authMiddleware,answerRoutes);
+const answerRoutes = require("./routes/answerRoute");
+app.use("/api", answerRoutes);
 
 // app.listen(port, () => console.log(`Listening to :${port}`));
 
