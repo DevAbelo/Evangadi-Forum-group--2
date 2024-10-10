@@ -1,15 +1,15 @@
-import { useState } from 'react'
-
-import './App.css'
+import React from 'react';
+import { Routes, Route } from 'react-router-dom';
+import Answer from "./pages/Answer/Answer";
+import "./App.css";
 
 function App() {
-  
-
   return (
-    <>
-      <h1>Evangadi Fourm Project Group 2</h1>
-    </>
-  )
+    <div>
+      <Routes>
+        <Route path="/Answer" element={<Answer />} />
+      </Routes>
+    </div>
+  );
 }
-
-export default App
+export default App;
