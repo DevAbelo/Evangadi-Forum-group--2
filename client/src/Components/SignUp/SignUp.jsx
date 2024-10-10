@@ -36,26 +36,27 @@ const SignUp = ({ visible }) => {
         email: email,
         password: password,
       });
+      console.log("User Registerd")
       if (response.status === 200) {
         navigate("/login");
       }
     } catch (error) {
       if (error.response) {
+      console.log(error.response.data)
         setError(error.response.data.message); // Show server error message
       } else {
         setError("An unexpected error occurred.");
       }
     }
   };
-
   return (
     <div className={Classes.signup_container}>
       <h2>Join the network</h2>
+      <p style={{color:"red",textAlign:"center"}}>{error}</p>
       <div className={Classes.login_link}>
         Already have an account?{" "}
         <Link onClick={() => setShow(false)}>Sign in</Link>
       </div>
-
       <form onSubmit={handleSubmit}>
         <div>
           <input

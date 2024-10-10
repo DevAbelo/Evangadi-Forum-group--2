@@ -7,6 +7,7 @@ import { useContext, useEffect, useState } from "react";
 import Routing from "./Routing";
 import { useNavigate } from "react-router-dom";
 import { AppState } from "./Context/DataContext";
+import axios from "./Api/axios";
 function App() {
  const {user,setUser}=useContext(AppState)
   const token=localStorage.getItem('token')
@@ -19,10 +20,10 @@ function App() {
         }
       });
       console.log(data)
-      setUser(data);
-      localStorage.setItem("userlogin",true);
+      setUser(data.username);
+      navigate("/home")
     } catch (error) {
-      console.log(error.response.data.msg);
+      console.log(error);
       navigate("/")
     }
   }

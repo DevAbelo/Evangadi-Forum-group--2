@@ -58,7 +58,7 @@ async function getAnswer(req, res) {
     const userid = req.user.userid; // from auth middlewear
     // retrieve/get answers for a specific question
     const [answer] = await dbConnection.query(
-      "SELECT answerid, answer, userid, created_at FROM answers WHERE questionid = ?",
+      "SELECT answers.answerid, answers.answer, answers.userid, answers.created_at,users.username AS user_name FROM answers JOIN users ON answers.userid = users.userid WHERE questionid = ?",
       [questionid]
     );
     return res.status(StatusCodes.OK).json({ questionid, answer: answer });

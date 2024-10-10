@@ -7,13 +7,19 @@
 body {
   font-family: Arial, sans-serif;
 }
+
 header {
   display: flex;
   justify-content: space-between;
   align-items: center;
   background-color: #fff;
-  padding: 10px 350px; /* Adjust padding for better spacing */
+  padding: 10px 350px;
+  /* Adjust padding for better spacing */
   border-bottom: 1px solid #ccc;
+}
+
+.username {
+  padding-left: 25px;
 }
 
 header .logo {
@@ -22,7 +28,8 @@ header .logo {
 }
 
 header .logo img {
-  width: 150px; /* Adjust logo size */
+  width: 150px;
+  /* Adjust logo size */
 }
 
 nav {
@@ -34,7 +41,8 @@ nav a {
   margin-right: 30px;
   text-decoration: none;
   color: #000;
-  font-size: 18px; /* Increase font size for links */
+  font-size: 18px;
+  /* Increase font size for links */
 }
 
 .logout_btn {
@@ -42,14 +50,16 @@ nav a {
   background-color: #4a90e2;
   color: #fff;
   border: none;
-  border-radius: 5px; /* Rounded corners */
+  border-radius: 5px;
+  /* Rounded corners */
   font-size: 16px;
   cursor: pointer;
   transition: background-color 0.3s;
 }
 
 .logout_btn:hover {
-  background-color: #357abd; /* Darker shade on hover */
+  background-color: #357abd;
+  /* Darker shade on hover */
 }
 
 main {
@@ -58,19 +68,27 @@ main {
   margin: 20px auto;
 }
 
+.question_section {
+  margin-top: 65px;
+}
+
 .question_section h2,
 .answer_section h2,
 .answer_form h2 {
   font-size: 24px;
   margin-bottom: 10px;
 }
-.answer_form h2, .answer_form p {
+
+.answer_form h2,
+.answer_form p {
   text-align: center;
 }
+
 .answer_form p {
-margin-top: 28px;
-margin-bottom: 10px;
+  margin-top: 28px;
+  margin-bottom: 10px;
 }
+
 .question_section h3 {
   font-size: 20px;
   color: #333;
@@ -90,12 +108,15 @@ margin-bottom: 10px;
   align-items: center;
   margin-top: 10px;
 }
-.margin p{
-    padding-left: 43px;
+
+.margin p {
+  padding-left: 43px;
 }
-.link_work a{
-    color: black !important
+
+.link_work a {
+  color: black !important
 }
+
 .answer img.avatar {
   width: 50px;
   height: 50px;

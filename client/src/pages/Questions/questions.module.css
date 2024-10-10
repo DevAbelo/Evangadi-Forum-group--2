@@ -1,6 +1,7 @@
 .post_question_container {
   padding: 80px 10px;
   background-color: #fafafa;
+  margin-top: 40px;
 }
 .inner_post_question_wrapper {
   width: 60%;

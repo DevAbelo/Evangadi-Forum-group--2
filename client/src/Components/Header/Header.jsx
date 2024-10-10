@@ -4,16 +4,14 @@ import evangadiLogo from "../../assets/img/EvangadiLogo.png";
 import { AiOutlineMenu } from "react-icons/ai";
 import { IoMdClose } from "react-icons/io";
 import { Link, Navigate, useNavigate } from "react-router-dom";
-// import { DataContext } from "../../Context/DataProvider";
 const Header = () => {
-  // const { user } = useContext(DataContext);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   // console.log(user);
   const navigate = useNavigate();
   const signOut = () => {
     localStorage.removeItem("token");
     setIsAuthenticated(false);
-    navigate("/login");
+    navigate("/");
   };
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const toggleSidebar = () => {
