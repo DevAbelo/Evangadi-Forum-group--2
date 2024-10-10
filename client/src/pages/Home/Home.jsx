@@ -12,7 +12,10 @@ function Home() {
   const {user}=useContext(AppState);
   const token = localStorage.getItem('token');
   const [questions,setquestions]=useState([]);
-localStorage.setItem("token","eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImJla2FsdSIsInVzZXJpZCI6MiwiaWF0IjoxNzI4NDQzMTU1LCJleHAiOjE3Mjg1Mjk1NTV9.bUm7KUrHkzmpMm9E_OJ_B29SvfCuH4rzOJiGetCxS7I")
+localStorage.setItem(
+  "token",
+  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IktlYmUiLCJ1c2VyaWQiOjEsImlhdCI6MTcyODUwNDU3MiwiZXhwIjoxNzI4NTkwOTcyfQ.Bq8pxiFTFV01S5c_sAcwPNpzf87ClFgXN6KUHdsK8TQ"
+);
   async function Loadquestions() {
     try {
       const {data} = await axios.get("/question",{
@@ -40,8 +43,8 @@ localStorage.setItem("token","eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZ
     <section className={classes.home__container}>
       <div className={classes.home__topcontainer}>
         <div ><Link to="/question">Ask Question</Link></div>
-        <div style={{fontSize:"20px",fontWeight:"300"}}><p >WelCome:<span style={{color:" #DA7229"}}>
-           {user?.username}
+        <div style={{fontSize:"20px",fontWeight:"300"}}><p >WELCOME:<span style={{color:" #DA7229"}}>
+           {user}
            </span></p></div>
       </div>
       <div style={{fontSize:"20px",fontWeight:"300",marginBottom:"20px"}}>

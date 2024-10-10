@@ -39,9 +39,7 @@ const Question = () => {
       setAlertMessage("Your question was posted successfully!");
       setAlertType("success");
     } catch (error) {
-      setAlertMessage("There was an error submitting your post.");
-      setAlertType("error");
-      console.log(error);
+      console.log(error.response);
     }
     setTimeout(() => {
       setAlertMessage("");

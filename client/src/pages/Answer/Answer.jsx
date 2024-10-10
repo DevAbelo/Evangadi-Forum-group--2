@@ -6,18 +6,18 @@ import { useParams } from "react-router-dom";
 import Loader from "../../Components/Loader/Loader";
 
 function Answer() {
-  const { questionid } = useParams();
+  const { questionId } = useParams();
   const [answer, setAnswer] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
   const [successMessage, setSuccessMessage] = useState("");
   const [username, setUsername] = useState("");
   const [question, setQuestion] = useState({ title: "", description: "" });
   const [answers, setAnswers] = useState([]);
-
+const token = localStorage.getItem("token")
   useEffect(() => {
     const fetchQuestion = async () => {
       try {
-        const response = await instance.get(`/question/${questionid}`, {
+        const response = await instance.get(`/question/${questionId}`, {
           headers: {
             authorization: "Bearer " + token,
           },
@@ -27,6 +27,7 @@ function Answer() {
           title: response.data.question.title,
           description: response.data.question.description,
         });
+        
       } catch (error) {
         console.error("Error fetching question:", error);
         setErrorMessage("Failed to load question.");
@@ -35,7 +36,7 @@ function Answer() {
 
     const fetchAnswers = async () => {
       try {
-        const response = await instance.get(`/${questionid}`, {
+        const response = await instance.get(`/${questionId}`, {
           headers: {
             authorization: "Bearer " + token,
           },
@@ -62,7 +63,7 @@ function Answer() {
 
     try {
       const response = await instance.post(
-        `/answer/${questionid}`,
+        `/answer/${questionId}`,
         {
           answer,
         },
@@ -85,7 +86,7 @@ function Answer() {
         setErrorMessage("An unexpected error occurred.");
       }
     } catch (error) {
-      console.error("Error posting answer:", error.response);
+      console.error("Error posting answer:", error);
       setErrorMessage("Something went wrong. Try again later.");
     }
   };
@@ -109,7 +110,10 @@ function Answer() {
           {answers.length > 0 ? (
             answers.map((answer, index) => (
               <div className={classes.answer} key={index}>
-                <IoIosContact size={200} />
+                <div>
+                  <IoIosContact size={100} />
+                  <h4 className={classes.username}>{answer.user_name}</h4>
+                </div>
 
                 <div className={classes.margin}>
                   <p>{answer.answer}</p> {/* 👈👈Displaying each answer */}

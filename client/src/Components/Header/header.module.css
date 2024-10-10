@@ -12,6 +12,7 @@
     position: fixed;
     z-index: 999;
     background-color: #fff;
+    top: 0;
 }
 
 /* Flex container for nav links and sign-in button */
