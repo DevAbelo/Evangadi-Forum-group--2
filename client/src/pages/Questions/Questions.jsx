@@ -1,18 +1,21 @@
-import React, { useRef } from "react";
+import React, { useRef, useState } from "react";
+import classes from "./questions.module.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircleDown } from "@fortawesome/free-solid-svg-icons";
+
 import classes from "./questions.module.css";
 import axios from "../../Api/axios";
 import { useNavigate } from "react-router-dom";
+import Loader from "../../Components/Loader/Loader";
 
-function Questions() {
-  
-  const navigate = useNavigate();
+
+const Question = () => {
+  const [alertMessage, setAlertMessage] = useState(""); // Alert message state
+  const [alertType, setAlertType] = useState(""); // To track success or error
 
   const token = localStorage.getItem("token");
   const titleDom = useRef(null);
   const detailDom = useRef(null);
-
   async function handleSubmit(e) {
     e.preventDefault();
     const title = titleDom.current.value;
@@ -33,13 +36,20 @@ function Questions() {
         { title, description },
         { headers: { Authorization: "Bearer " + token } }
       );
-      navigate("/");
+      setAlertMessage("Your question was posted successfully!");
+      setAlertType("success");
     } catch (error) {
       console.log(error.response);
     }
+    setTimeout(() => {
+      setAlertMessage("");
+      window.location.reload();
+    }, 4000);
   }
 
   return (
+    <>
+    <Loader/>
     <section className={classes.post_question_container}>
       <div className={classes.inner_post_question_wrapper}>
         <div>
@@ -84,6 +94,16 @@ function Questions() {
         <div>
           <h3 className={classes.post_title_2}>Post Your Question</h3>
         </div>
+        {alertMessage && (
+          <div
+            className={classes.question_alert_message}
+            style={{
+              color: alertType === "success" ? "green" : "red",
+            }}
+          >
+            {alertMessage}
+          </div>
+        )}
         <form onSubmit={handleSubmit}>
           <input
             ref={titleDom}
@@ -106,7 +126,8 @@ function Questions() {
         </form>
       </div>
     </section>
+    </>
   );
-}
+};
 
-export default Questions;
+export default Question;
