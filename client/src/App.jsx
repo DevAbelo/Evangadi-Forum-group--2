@@ -21,10 +21,10 @@ function App() {
       });
       console.log(data)
       setUser(data.username);
-      navigate("/home")
+      navigate("/")
     } catch (error) {
       console.log(error);
-      navigate("/")
+      navigate("/login")
     }
   }
 useEffect(()=>{

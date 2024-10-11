@@ -6,12 +6,12 @@ import { IoMdClose } from "react-icons/io";
 import { Link, Navigate, useNavigate } from "react-router-dom";
 const Header = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
-  // console.log(user);
+  const token = localStorage.getItem("token");
   const navigate = useNavigate();
   const signOut = () => {
     localStorage.removeItem("token");
     setIsAuthenticated(false);
-    navigate("/");
+    navigate("/login");
   };
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const toggleSidebar = () => {
@@ -19,9 +19,9 @@ const Header = () => {
   };
   useEffect(() => {
     // Check if user is authenticated by looking for a token in localStorage
-    const token = localStorage.getItem("token");
+
     setIsAuthenticated(!!token);
-  }, []);
+  }, [token]);
   return (
     <header className={classes.header}>
       {/* Logo */}

@@ -13,7 +13,7 @@ const About = () => {
           <h1>Evangadi Networks Q&A</h1>
         </div>
         {/* paragraph container  */}
-        <div>
+        <div className={classes.about__detail}>
           <p>
             No matter what stage of life you are in, whether you’re just
             starting elementary school or being promoted to CEO of a Fortune 500

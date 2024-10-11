@@ -8,7 +8,7 @@ async function install(req, res) {
     lastname varchar(20) not null,
     email varchar(20) not null,
     password varchar(100) not null,
-    PRIMARY KEY (userid)
+    PRIMARY KEY(userid)
 )`;
   let createquestions = `CREATE TABLE if not exists questions(
     id int(20) not null auto_increment,
@@ -32,8 +32,6 @@ async function install(req, res) {
     FOREIGN KEY (userid) REFERENCES users(userid)
     
 )`;
-  // let alterquestion = `ALTER TABLE questions ADD COLUMN created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP`;
-  //  let alteranswer= `ALTER TABLE answers ADD COLUMN created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP`;
   try {
     await dbConnection.query(createuser);
     await dbConnection.query(createquestions);
