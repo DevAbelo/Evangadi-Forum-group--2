@@ -2,8 +2,8 @@ import React, { useContext, useEffect, useState } from "react";
 import classes from "./home.module.css";
 import { Link, useNavigate } from "react-router-dom";
 import { IoIosArrowForward, IoMdContact } from "react-icons/io";
+import { FaSearch } from "react-icons/fa";
 import { AppState } from "../../Context/DataContext";
-import { IoIosContact } from "react-icons/io";
 import axios from "../../Api/axios";
 import Loader from "../../Components/Loader/Loader";
 // Assigne to Abel and Bekalu.
@@ -13,6 +13,8 @@ function Home() {
   const token = localStorage.getItem("token");
   const [questions, setquestions] = useState([]);
   const [isloading, setIsLoading] = useState(false);
+  const [searchItem, setSearchItem] = useState("");
+  const [filteredQuestions, setFilteredQuestions] = useState(questions);
   const navigate = useNavigate();
   async function Loadquestions() {
     try {
@@ -50,6 +52,12 @@ function Home() {
     checkuser();
     Loadquestions();
   }, []);
+  useEffect(() => {
+    const filtered = questions.filter((question) =>
+      question.title.toLowerCase().includes(searchItem.toLowerCase())
+    );
+    setFilteredQuestions(filtered);
+  }, [searchItem, questions]);
   return (
     <>
       {isloading ? (
@@ -74,9 +82,17 @@ function Home() {
             }}
           >
             Questions
+            <div className={classes.search}>
+              <input
+                type="text"
+                value={searchItem}
+                onChange={(e) => setSearchItem(e.target.value)}
+                placeholder="Search questions..."
+              />
+            </div>
           </div>
           <div>
-            {questions?.map((question, i) => {
+            {filteredQuestions?.map((question, i) => {
               return (
                 <div className={classes.question__outercontainer} key={i}>
                   <hr />

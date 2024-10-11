@@ -123,7 +123,11 @@ const SignUp = ({ visible }) => {
             onClick={togglePasswordVisibility}
             className={Classes.toggle_password}
           >
-            {showPassword ? <BiShow /> : <BiHide />}
+            {showPassword ? (
+              <BiShow size={20} color="#E58600" />
+            ) : (
+              <BiHide size={20} color="#E58600" />
+            )}
           </button>
         </div>
         <div className={Classes.paragrap}>
@@ -144,7 +148,7 @@ const SignUp = ({ visible }) => {
       </form>
 
       <div className={Classes.login_link}>
-        <Link to="/login">Already have an account?</Link>
+        <Link onClick={() => setShow(false)}>Already have an account?</Link>
       </div>
     </div>
   );
