@@ -1,15 +1,22 @@
 const mysql2 = require("mysql2");
 const dotenv = require("dotenv");
+
 dotenv.config();
 
-const dbConnection = mysql2.createConnection({
-    // socketPath: "/Applications/MAMP/tmp/mysql/mysql.sock", //path to mysql sock in MAMP
-    user: "DBuser",
-    database: "evangadi_forum_db",
-    host: "localhost",
-    password: "abcd@1234",
-   
-  });
-  module.exports=dbConnection.promise()
-  
+const dbConnection = mysql2.createPool({
+  host: process.env.DB_HOST,
+  user: process.env.DB_USER,
+  password: process.env.DB_PASS,
+  database: process.env.DB_NAME,
+});
 
+// Connect to the database
+dbConnection.getConnection((err) => {
+  if (err) {
+    console.error("Database connection failed:", err.message);
+    return;
+  } else {
+    console.log("Connected to the Hostinger database successfully!");
+  }
+});
+module.exports = dbConnection.promise();

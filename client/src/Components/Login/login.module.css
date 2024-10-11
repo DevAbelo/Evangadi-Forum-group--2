@@ -54,7 +54,7 @@
   /* border: 0.5px solid rgb(202, 202, 202); */
 }
 
-.signIn_form button {
+.submit {
   margin-top: 75px;
   padding: 10px;
   background-color: #007BFF;
@@ -64,7 +64,7 @@
 
 }
 
-.signIn_form button:hover {
+.submit:hover {
   background-color: #0056b3;
 }
 
@@ -73,7 +73,24 @@
   text-align: center;
   margin-bottom: 10px;
 }
+.password_field {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
 
+.toggle_password {
+  position: absolute;
+  right: 10px;
+  background: none;
+  cursor: pointer;
+  font-size: 20px;
+  padding-top: 28px;
+}
+
+.toggle_password:hover {
+  background: none;
+}
 @media screen and (max-width:760px) {
   .signIn_container {
     width: 100%;

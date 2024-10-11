@@ -23,7 +23,10 @@
 
 }
 
-
+.about__detail p{
+text-align: justify;
+line-height: 1.5;
+}
 
 .about_container p,
 .about_container h1 {

@@ -35,12 +35,9 @@ div {
 
 input {
     width: 100%;
-    padding: 25px;
+    padding: 17px;
     border: 0.5px solid #ddd;
     border-radius: 5px;
-
-
-
 }
 
 input:focus {
@@ -68,13 +65,12 @@ button {
     cursor: pointer;
     font-weight: bold;
     border: none;
-
-
+    color: #fff;
 }
 
 button:hover {
-    background-color: blue;
-    /* Darker green */
+    background-color: rgb(30, 80, 189);
+    /* background-color: rgb(0,0,255); */
 }
 
 .login_link {
@@ -93,6 +89,9 @@ button:hover {
 
 .inputfirst {
     display: flex;
+    padding: 0 17px 0 2px;
+    margin: auto;
+    /* background-color: red; */
 }
 
 .password_field {

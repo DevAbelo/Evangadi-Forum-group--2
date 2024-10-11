@@ -3,9 +3,10 @@ import Classes from "./signUp.module.css";
 import { BiHide, BiShow } from "react-icons/bi";
 import axios from "../../Api/axios";
 import { Link, useNavigate } from "react-router-dom";
+import { ClipLoader } from "react-spinners";
 
 const SignUp = ({ visible }) => {
-  const { setShow } = visible;
+  const { show, setShow } = visible;
   const navigate = useNavigate();
   const [userName, setUserName] = useState("");
   const [firstName, setFirstName] = useState("");
@@ -14,17 +15,19 @@ const SignUp = ({ visible }) => {
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState("");
-
+  const [isLoading, setIsLoading] = useState(false);
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
   };
 
   const handleSubmit = async (e) => {
+    setIsLoading(true);
     e.preventDefault();
 
     // Validate required fields
     if (!userName || !firstName || !lastName || !email || !password) {
       setError("Please fill in all required fields.");
+      // setIsLoading(false);
       return;
     }
 
@@ -36,13 +39,12 @@ const SignUp = ({ visible }) => {
         email: email,
         password: password,
       });
-      console.log("User Registerd")
-      if (response.status === 200) {
-        navigate("/login");
-      }
+      console.log("User Registerd");
+      setShow(false);
     } catch (error) {
+      setIsLoading(false);
       if (error.response) {
-      console.log(error.response.data)
+        console.log(error.response.data);
         setError(error.response.data.message); // Show server error message
       } else {
         setError("An unexpected error occurred.");
@@ -52,7 +54,7 @@ const SignUp = ({ visible }) => {
   return (
     <div className={Classes.signup_container}>
       <h2>Join the network</h2>
-      <p style={{color:"red",textAlign:"center"}}>{error}</p>
+      <p style={{ color: "red", textAlign: "center" }}>{error}</p>
       <div className={Classes.login_link}>
         Already have an account?{" "}
         <Link onClick={() => setShow(false)}>Sign in</Link>
@@ -136,11 +138,13 @@ const SignUp = ({ visible }) => {
             .
           </p>
         </div>
-        <button type="submit">Agree and Join</button>
+        <button type="submit">
+          {isLoading ? <ClipLoader size={12} color="gray" /> : "Agree and Join"}
+        </button>
       </form>
 
       <div className={Classes.login_link}>
-        <a href="/login">Already have an account?</a>
+        <Link to="/login">Already have an account?</Link>
       </div>
     </div>
   );

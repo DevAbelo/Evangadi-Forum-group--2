@@ -6,7 +6,7 @@ function Loader() {
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
-        height: "50vh",
+        height: "350px",
       }}
     >
       <img src={Loading} alt="" />

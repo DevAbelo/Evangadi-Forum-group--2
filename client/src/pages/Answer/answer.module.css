@@ -108,7 +108,12 @@ main {
   align-items: center;
   margin-top: 10px;
 }
-
+.success{
+  color: green;
+}
+.error{
+  color: "red";
+}
 .margin p {
   padding-left: 43px;
 }

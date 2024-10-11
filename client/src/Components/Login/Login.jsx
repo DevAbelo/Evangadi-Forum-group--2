@@ -4,21 +4,29 @@ import axios from "../../Api/axios";
 import classes from "./login.module.css"; // Import your CSS file
 import { useContext, useRef, useState } from "react";
 import { AppState } from "../../Context/DataContext";
+import { BiHide, BiShow } from "react-icons/bi";
+import { ClipLoader } from "react-spinners";
+import { faL } from "@fortawesome/free-solid-svg-icons";
 function SignIn({ visible }) {
   const { setShow } = visible;
   const emailRef = useRef();
   const passwordRef = useRef();
   const [errorMessage, setErrorMessage] = useState("");
+  const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
   const { user, setUser } = useContext(AppState);
   async function handleSubmit(e) {
     e.preventDefault();
+    setIsLoading(true);
     const emailValue = emailRef.current.value.trim();
     const passwordValue = passwordRef.current.value;
 
     // Form validation
     if (!emailValue || !passwordValue) {
       setErrorMessage("Please provide all required information.");
+      setIsLoading(false);
       return;
     }
 
@@ -33,6 +41,8 @@ function SignIn({ visible }) {
         navigate("/");
       }
     } catch (error) {
+      setIsLoading(false);
+      // console.log(error);
       if (error.response) {
         setErrorMessage(error.response.data.message || "Something went wrong!");
       } else {
@@ -40,6 +50,9 @@ function SignIn({ visible }) {
       }
     }
   }
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword);
+  };
 
   return (
     <section className={classes.signIn_container}>
@@ -64,15 +77,24 @@ function SignIn({ visible }) {
             placeholder="Enter your email"
             required
           />
-          {/* </div> */}
-          {/* <div> */}
-          {/* <label>Password: </label> */}
-          <input
-            ref={passwordRef}
-            type="password"
-            placeholder="Enter your password"
-            required
-          />
+          <div className={classes.password_field}>
+            <input
+              size="65"
+              ref={passwordRef}
+              placeholder="Enter your password"
+              type={showPassword ? "text" : "password"}
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              required
+            />
+            <button
+              type="button"
+              onClick={togglePasswordVisibility}
+              className={classes.toggle_password}
+            >
+              {showPassword ? <BiShow /> : <BiHide />}
+            </button>
+          </div>
         </div>
 
         <p class="forgotPwd">
@@ -80,7 +102,9 @@ function SignIn({ visible }) {
             Forgot password ?
           </a>
         </p>
-        <button type="submit">Sign In</button>
+        <button className={classes.submit} type="submit">
+          {isLoading ? <ClipLoader size={12} color="gray" /> : "Sign In"}
+        </button>
       </form>
     </section>
   );
