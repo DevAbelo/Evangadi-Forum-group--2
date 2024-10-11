@@ -6,7 +6,6 @@ import { useContext, useRef, useState } from "react";
 import { AppState } from "../../Context/DataContext";
 import { BiHide, BiShow } from "react-icons/bi";
 import { ClipLoader } from "react-spinners";
-import { faL } from "@fortawesome/free-solid-svg-icons";
 function SignIn({ visible }) {
   const { setShow } = visible;
   const emailRef = useRef();
@@ -92,15 +91,19 @@ function SignIn({ visible }) {
               onClick={togglePasswordVisibility}
               className={classes.toggle_password}
             >
-              {showPassword ? <BiShow /> : <BiHide />}
+              {showPassword ? (
+                <BiShow size={20} color="#E58600" />
+              ) : (
+                <BiHide size={20} color="#E58600" />
+              )}
             </button>
           </div>
         </div>
 
-        <p class="forgotPwd">
-          <a class="lnk-toggler" data-panel="panel-forgot" href="#">
+        <p className={classes.forgotPwd}>
+          <Link className={classes.lnk_toggler} data-panel="panel-forgot" >
             Forgot password ?
-          </a>
+          </Link>
         </p>
         <button className={classes.submit} type="submit">
           {isLoading ? <ClipLoader size={12} color="gray" /> : "Sign In"}
