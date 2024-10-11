@@ -1,10 +1,9 @@
 import React, { useState, useEffect } from "react";
 import classes from "../Answer/answer.module.css";
-import { IoIosContact, IoMdContact } from "react-icons/io";
+import { IoMdContact } from "react-icons/io";
 import instance from "../../Api/axios";
 import { useParams } from "react-router-dom";
 import Loader from "../../Components/Loader/Loader";
-
 function Answer() {
   const { questionId } = useParams();
   const [answer, setAnswer] = useState("");
@@ -60,6 +59,7 @@ function Answer() {
     e.preventDefault();
     setIsLoading(true);
     if (!answer) {
+      setIsLoading(false);
       setErrorMessage("Please provide an answer.");
       return;
     }
@@ -88,6 +88,7 @@ function Answer() {
         setErrorMessage("An unexpected error occurred.");
       }
     } catch (error) {
+      setIsLoading(false);
       console.error("Error posting answer:", error);
       setErrorMessage("Something went wrong. Try again later.");
     }
@@ -128,13 +129,13 @@ function Answer() {
               <p>No answers yet. Be the first to answer!😇</p>
             )}
             {/* Displaying The fetched username... */}
-            <p className={classes.username}>{username}</p>
+            
           </section>
 
           <section className={classes.answer_form}>
             <h2>Answer The Top Question</h2>
             {/* displaying error❌ or success messages👍 */}
-            {errorMessage && <p className={classes.error}>{errorMessage}</p>}
+            {errorMessage && <p className={classes.error} style={{color:"red"}}>{errorMessage}</p>}
             {successMessage && (
               <p className={classes.success}>{successMessage}</p>
             )}
