@@ -1,3 +1,6 @@
+@import url('https://fonts.googleapis.com/css2?family=Lobster&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&display=swap');
+
 * {
   margin: 0;
   padding: 0;
@@ -63,16 +66,54 @@ nav a {
 }
 
 main {
-  padding: 20px;
-  max-width: 900px;
+  max-width: 800px;
   margin: 20px auto;
+  padding: 10px;
+  font-family: Arial, sans-serif;
+  background-color: #f9f9f9;
+  border-radius: 5px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  margin-bottom: 40px;
 }
 
-.question_section {
-  margin-top: 65px;
+
+
+.question_box {
+ display: flex;
+ flex-direction: row;
+}
+.real_question{
+ display: flex;
+  flex-direction:column;
+}
+.real_question h4{
+    margin-bottom: 20px;
+}
+.real_question p{
+    margin-top: 20px;
+    margin-bottom: 40px;
+    margin: auto;}
+.question_box span hr {
+  background-color: red;
+}
+.question_box span h4{
+   font-family:  'Lobster', cursive;
+   font-size: 25px;
+}
+.question_box p{
+  font-size: 20PX;
+   font-family: 'Merriweather', serif;
+   padding-top: 10px;
+}
+.title {
+ margin-top: 100px;
+  font-size: medium;
+  font-weight: bold;
+}
+.title h1{
+   margin-bottom: 40px;
 }
 
-.question_section h2,
 .answer_section h2,
 .answer_form h2 {
   font-size: 24px;
@@ -89,16 +130,6 @@ main {
   margin-bottom: 10px;
 }
 
-.question_section h3 {
-  font-size: 20px;
-  color: #333;
-}
-
-.question_section p a {
-  color: #4a90e2;
-  text-decoration: none;
-}
-
 .answer_section {
   margin-top: 20px;
 }
@@ -111,7 +142,7 @@ main {
 .success{
   color: green;
 }
-.error {
+.error{
   color: "red";
 }
 .margin p {
@@ -160,4 +191,27 @@ main {
   border: none;
   cursor: pointer;
   margin-top: 10px;
+}
+.link {
+  text-align: center;
+  font-size: small;
+  color: black;
+  text-decoration: none;
+}
+@media (max-width: 760px) {
+  .answer_container {
+    padding: 10px;
+  }
+
+  .title h1 {
+    font-size: 20px;
+  }
+
+  .title p {
+    font-size: 16px;
+  }
+
+  textarea {
+    height: 80px;
+  }
 }
