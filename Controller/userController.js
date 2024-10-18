@@ -1,7 +1,7 @@
 const bcrypt = require("bcrypt");
 const { StatusCodes } = require("http-status-codes");
 const dbConnection = require("../db/dbconfig");
-const jwt = require("jsonwebtoken");
+const jwt = require("jsonwebtoken")
 const dotenv = require("dotenv");
 dotenv.config();
 
@@ -15,19 +15,11 @@ async function register(req, res) {
     });
   }
   // response if the input password less than 8 digit
-  if (
-    password.length < 8 ||
-    !/[A-Z]/.test(password) ||
-    !/[a-z]/.test(password) ||
-    !/[0-9]/.test(password) ||
-    !/[!@#$%^&*(),.?":{}|<>]/.test(password)
-  ) {
+  if (password.length < 8) {
     return res.status(StatusCodes.BAD_REQUEST).json({
-      message:
-        "Password must be at least 8 characters, one uppercase, one lowercase, a number & one special character",
+      message: "Password must be at least 8 characters",
     });
   }
-
   try {
     // check if the user already exists
     const [user] = await dbConnection.query(
@@ -62,45 +54,32 @@ async function register(req, res) {
 }
 // Assigne to Abel
 async function login(req, res) {
-  const { email, password } = req.body;
-  if (!email || !password) {
-    return res
-      .status(StatusCodes.BAD_REQUEST)
-      .json({ message: "please provide all requird information" });
+  const {email,password}=req.body
+  if(!email || !password){
+    return res.status(StatusCodes.BAD_REQUEST).json({message:"please provide all requird information"})
   }
   try {
-    const [user] = await dbConnection.query(
-      "select username,userid,password from users where email=? ",
-      [email]
-    );
-    if (user.length === 0) {
-      return res
-        .status(StatusCodes.BAD_REQUEST)
-        .json({ message: "invaild credential" });
+    const [user]= await dbConnection.query("select username,userid,password from users where email=? ",[email])
+    if(user.length === 0){
+      return res.status(StatusCodes.BAD_REQUEST).json({message:"invaild credential"})
     }
-    const isMatch = await bcrypt.compare(password, user[0].password);
+    const isMatch=await bcrypt.compare(password,user[0].password)
+   
+   if (!isMatch)
+   {
+    return res.status(StatusCodes.BAD_REQUEST).json({message:"invaild credential"})
+   }
 
-    if (!isMatch) {
-      return res
-        .status(StatusCodes.BAD_REQUEST)
-        .json({ message: "invaild credential" });
-    }
-
-    //if usename and password correct send token
-    const username = user[0].username;
-    const userid = user[0].userid;
-    const token = jwt.sign({ username, userid }, process.env.JWTSECRET, {
-      expiresIn: "1d",
-    });
-    return res
-      .status(StatusCodes.OK)
-      .json({ message: "user login sucessfully", token });
+   //if usename and password correct send token
+   const username=user[0].username
+   const userid=user[0].userid
+   const token = jwt.sign({username,userid},process.env.JWTSECRET,{expiresIn :"1d"})
+   return res.status(StatusCodes.OK).json({message:"user login sucessfully",token})
   } catch (error) {
-    console.log(error.message);
-    return res
-      .status(StatusCodes.INTERNAL_SERVER_ERROR)
-      .json({ message: "someting went wrong,try again later" });
+    console.log(error.message)
+  return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({message:"someting went wrong,try again later"})
   }
+
 }
 function checkuser(req, res) {
   //Assignee: Habte and bekalu 10/04/2024
