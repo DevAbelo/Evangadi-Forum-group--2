@@ -47,7 +47,7 @@ const Header = () => {
             SIGN OUT
           </button>
         ) : (
-          <button className={classes.header__signin} onClick={signOut}>
+          <button className={classes.header__signin}>
             SIGN IN
           </button>
         )}
