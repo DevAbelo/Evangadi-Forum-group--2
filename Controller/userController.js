@@ -54,32 +54,39 @@ async function register(req, res) {
 }
 // Assigne to Abel
 async function login(req, res) {
-  const {email,password}=req.body
-  if(!email || !password){
-    return res.status(StatusCodes.BAD_REQUEST).json({message:"please provide all requird information"})
+  const { email, password } = req.body;
+
+  // Check if email and password are provided
+  if (!email || !password) {
+    return res.status(StatusCodes.BAD_REQUEST).json({ message: "please provide all required information" });
   }
+
   try {
-    const [user]= await dbConnection.query("select username,userid,password from users where email=? ",[email])
-    if(user.length === 0){
-      return res.status(StatusCodes.BAD_REQUEST).json({message:"invaild credential"})
+    // Check if the user exists based on the email
+    const [user] = await dbConnection.query("select username,userid,password from users where email=? ", [email]);
+    
+    // If the user does not exist, return an error
+    if (user.length === 0) {
+      return res.status(StatusCodes.BAD_REQUEST).json({ message: "invalid credential" });
     }
-    const isMatch=await bcrypt.compare(password,user[0].password)
-   
-   if (!isMatch)
-   {
-    return res.status(StatusCodes.BAD_REQUEST).json({message:"invaild credential"})
-   }
 
-   //if usename and password correct send token
-   const username=user[0].username
-   const userid=user[0].userid
-   const token = jwt.sign({username,userid},process.env.JWTSECRET,{expiresIn :"1d"})
-   return res.status(StatusCodes.OK).json({message:"user login sucessfully",token})
+    // Compare the provided password with the stored hashed password
+    const isMatch = await bcrypt.compare(password, user[0].password);
+    
+    if (!isMatch) {
+      return res.status(StatusCodes.BAD_REQUEST).json({ message: "invalid credential" });
+    }
+
+    // If username and password are correct, generate a JWT token
+    const username = user[0].username;
+    const userid = user[0].userid;
+    const token = jwt.sign({ username, userid }, process.env.JWTSECRET, { expiresIn: "1d" });
+    
+    return res.status(StatusCodes.OK).json({ message: "user login successfully", token });
   } catch (error) {
-    console.log(error.message)
-  return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({message:"someting went wrong,try again later"})
+    console.log(error.message);
+    return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ message: "something went wrong, try again later" });
   }
-
 }
 function checkuser(req, res) {
   //Assignee: Habte and bekalu 10/04/2024

@@ -5,6 +5,6 @@ const instance = axios.create({
   // baseURL: "http://localhost:5500/api",
 
   // deployed version of Evangadi server in Render.com
-  baseURL: "https:evangadi-forum-backend-mcyd.onrender.com"
+  baseURL: "https://evangadi-forum-backend-mcyd.onrender.com/api"
 });
 export default instance;
